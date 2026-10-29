@@ -1,0 +1,370 @@
+[
+  {
+    "slug": "microsoft-365-security-checklist",
+    "title": "Microsoft 365 Security Checklist",
+    "blurb": "Identity and MFA, Conditional Access, admin roles, email security (SPF, DKIM, DMARC, forwarding), devices, audit logging and backups, each check with a Microsoft Learn link.",
+    "edition": "October 2026",
+    "intro": "A tenant-wide security baseline for Microsoft 365 and Microsoft Entra ID, taken from Microsoft’s own guidance. Work through it top to bottom; some checks need Entra ID P1 or P2, Intune or Defender for Office 365 licences, as noted in the linked pages.",
+    "sections": [
+      {
+        "title": "Identity and MFA",
+        "items": [
+          {
+            "check": "Require multifactor authentication for every user, with security defaults or a Conditional Access policy.",
+            "why": "MFA blocks the large majority of password-spray and credential-stuffing attacks against cloud accounts.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/policy-all-users-mfa-strength"
+          },
+          {
+            "check": "Require phishing-resistant MFA (passkeys/FIDO2, Windows Hello for Business or certificates) for administrators.",
+            "why": "Admin accounts are the main target of adversary-in-the-middle phishing, which can relay app and SMS codes.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/policy-admin-phish-resistant-mfa"
+          },
+          {
+            "check": "Enable self-service password reset for all users.",
+            "why": "Users can recover from a forgotten or compromised password with verified methods instead of a helpdesk call.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr"
+          },
+          {
+            "check": "Use Microsoft Entra Password Protection, with a custom banned-password list for your company and product names.",
+            "why": "It rejects weak and commonly guessed passwords when users set or change them.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/authentication/concept-password-ban-bad"
+          },
+          {
+            "check": "Create two cloud-only emergency access (break-glass) accounts, protected with phishing-resistant MFA and monitored for sign-ins.",
+            "why": "They keep you from being locked out of the tenant if Conditional Access or a federation provider fails.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access"
+          }
+        ]
+      },
+      {
+        "title": "Conditional Access",
+        "items": [
+          {
+            "check": "Block legacy authentication protocols for all users.",
+            "why": "Legacy protocols such as POP, IMAP and SMTP basic auth cannot do MFA, so attackers use them to bypass it.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/policy-block-legacy-authentication"
+          },
+          {
+            "check": "Turn on sign-in risk and user risk policies (Entra ID P2).",
+            "why": "Microsoft Entra ID Protection can then demand MFA or a secure password change when a sign-in or account looks compromised.",
+            "href": "https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-configure-risk-policies"
+          },
+          {
+            "check": "Require a compliant or hybrid-joined device for access to company data.",
+            "why": "Stolen credentials alone are no longer enough; the sign-in must come from a managed, healthy device.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/policy-all-users-device-compliance"
+          },
+          {
+            "check": "Test every new policy in report-only mode before you enforce it, and exclude your emergency access accounts.",
+            "why": "Report-only mode shows who a policy would affect, so you do not lock out users or yourself.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-report-only"
+          },
+          {
+            "check": "Restrict user consent to applications (verified publishers and low-risk permissions only) and set up the admin consent workflow.",
+            "why": "Consent phishing tricks users into granting a malicious app ongoing access to mail and files.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-user-consent"
+          }
+        ]
+      },
+      {
+        "title": "Admin roles",
+        "items": [
+          {
+            "check": "Keep the number of Global Administrators small (Microsoft recommends fewer than five) and use dedicated, cloud-only admin accounts.",
+            "why": "Every Global Administrator can change anything in the tenant, so each extra one widens the attack surface.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/best-practices"
+          },
+          {
+            "check": "Assign the least-privileged role for each task, such as Exchange, User or Helpdesk Administrator, instead of Global Administrator.",
+            "why": "A compromised account with a narrow role can do far less damage.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/delegate-by-task"
+          },
+          {
+            "check": "Use Privileged Identity Management for just-in-time, time-limited and approved role activation (Entra ID P2).",
+            "why": "Standing admin access is replaced by roles that are active only when needed and are fully audited.",
+            "href": "https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-configure"
+          }
+        ]
+      },
+      {
+        "title": "Email security",
+        "items": [
+          {
+            "check": "Publish an SPF record that lists every service allowed to send mail for your domains.",
+            "why": "Receiving servers use SPF to check that mail claiming to be from your domain came from an authorised source.",
+            "href": "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-spf-configure"
+          },
+          {
+            "check": "Turn on DKIM signing for each custom domain in Microsoft 365.",
+            "why": "DKIM signs outgoing mail so receivers can verify it was not altered and really came from your domain.",
+            "href": "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure"
+          },
+          {
+            "check": "Publish a DMARC record, start with p=none and reporting, then move to quarantine or reject.",
+            "why": "DMARC tells receivers what to do with mail that fails SPF and DKIM, which stops direct spoofing of your domain.",
+            "href": "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure"
+          },
+          {
+            "check": "Block automatic forwarding to external addresses in the outbound spam policy, with exceptions only where needed.",
+            "why": "Attackers who take over a mailbox often add a forwarding rule to copy mail out quietly.",
+            "href": "https://learn.microsoft.com/en-us/defender-office-365/outbound-spam-policies-external-email-forwarding"
+          },
+          {
+            "check": "Apply the Standard or Strict preset security policies for anti-spam, anti-phishing, Safe Links and Safe Attachments.",
+            "why": "Presets keep protection at Microsoft’s recommended settings as new controls are added.",
+            "href": "https://learn.microsoft.com/en-us/defender-office-365/preset-security-policies"
+          }
+        ]
+      },
+      {
+        "title": "Devices",
+        "items": [
+          {
+            "check": "Enrol devices in Intune and set compliance policies (OS version, encryption, firewall, antivirus).",
+            "why": "Compliance status is what Conditional Access uses to decide whether a device is trusted.",
+            "href": "https://learn.microsoft.com/en-us/intune/device-security/compliance/overview"
+          },
+          {
+            "check": "Use app protection policies for Outlook, Teams and OneDrive on personal phones.",
+            "why": "They protect company data inside the apps (no copy to personal apps, PIN, selective wipe) without enrolling the phone.",
+            "href": "https://learn.microsoft.com/en-us/intune/app-management/protection/overview"
+          },
+          {
+            "check": "Encrypt Windows devices with BitLocker and escrow the recovery keys in Entra ID.",
+            "why": "A lost or stolen laptop then does not expose the files stored on it.",
+            "href": "https://learn.microsoft.com/en-us/intune/device-configuration/endpoint-security/encrypt-bitlocker-windows"
+          }
+        ]
+      },
+      {
+        "title": "Audit and logging",
+        "items": [
+          {
+            "check": "Confirm that Microsoft Purview audit (the unified audit log) is turned on.",
+            "why": "Without the audit log you cannot investigate who read, changed or deleted mail and files.",
+            "href": "https://learn.microsoft.com/en-us/purview/audit-log-enable-disable"
+          },
+          {
+            "check": "Send Entra sign-in and audit logs to a Log Analytics workspace or your SIEM.",
+            "why": "Entra keeps these logs for a limited time only; exporting them keeps the history you need for an investigation.",
+            "href": "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs"
+          },
+          {
+            "check": "Review the default alert policies and send alerts to a monitored mailbox.",
+            "why": "Built-in alerts flag events such as new forwarding rules, elevated mail sending and admin changes.",
+            "href": "https://learn.microsoft.com/en-us/defender-xdr/alert-policies"
+          },
+          {
+            "check": "Check Microsoft Secure Score every month and work through its top recommended actions.",
+            "why": "Secure Score measures your configuration against Microsoft’s recommendations and shows what to fix next.",
+            "href": "https://learn.microsoft.com/en-us/defender-xdr/microsoft-secure-score"
+          }
+        ]
+      },
+      {
+        "title": "Backups and retention",
+        "items": [
+          {
+            "check": "Set retention policies for Exchange, SharePoint, OneDrive and Teams that match your legal and business needs.",
+            "why": "Retention keeps content for a set period even if a user deletes it.",
+            "href": "https://learn.microsoft.com/en-us/purview/retention"
+          },
+          {
+            "check": "Decide whether you need a backup in addition to retention, such as Microsoft 365 Backup or a third-party service, and test a restore.",
+            "why": "Retention is not a point-in-time backup; a backup lets you roll back after ransomware or a bad bulk change.",
+            "href": "https://learn.microsoft.com/en-us/microsoft-365/backup/backup-overview"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "azure-cost-saving-checklist",
+    "title": "Azure Cost Saving Checklist",
+    "blurb": "Reservations and savings plans, rightsizing, orphaned disks, IPs and snapshots, dev/test schedules, storage tiers, egress, Log Analytics retention, tagging and budgets, each with a Microsoft Learn link.",
+    "edition": "October 2026",
+    "intro": "Practical cost checks for an Azure subscription, taken from Microsoft’s Cost Management, Advisor and Well-Architected guidance. Start with the items that match your largest cost lines in Cost analysis.",
+    "sections": [
+      {
+        "title": "Know where the money goes",
+        "items": [
+          {
+            "check": "Open Cost analysis and group cost by service, resource group and resource for the last full month.",
+            "why": "You need to know your largest cost lines before you decide which savings are worth the effort.",
+            "href": "https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/quick-acm-cost-analysis"
+          },
+          {
+            "check": "Work through the cost recommendations in Azure Advisor.",
+            "why": "Advisor flags underused VMs, idle resources and reservation opportunities based on your actual usage.",
+            "href": "https://learn.microsoft.com/en-us/azure/advisor/advisor-cost-recommendations"
+          }
+        ]
+      },
+      {
+        "title": "Reservations and savings plans",
+        "items": [
+          {
+            "check": "Buy Azure Reservations for VMs, databases and other services that run steadily all year.",
+            "why": "A one- or three-year commitment is charged at a significant discount to pay-as-you-go prices.",
+            "href": "https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/save-compute-costs-reservations"
+          },
+          {
+            "check": "Use an Azure savings plan for compute when your workloads change size, region or service.",
+            "why": "A savings plan applies an hourly spend commitment across eligible compute services, so it stays useful as things change.",
+            "href": "https://learn.microsoft.com/en-us/azure/cost-management-billing/savings-plan/savings-plan-overview"
+          },
+          {
+            "check": "Apply Azure Hybrid Benefit to Windows Server and SQL Server workloads covered by eligible licences.",
+            "why": "You stop paying for a licence you already own through Software Assurance or a subscription.",
+            "href": "https://learn.microsoft.com/en-us/azure/virtual-machines/windows/hybrid-use-benefit-licensing"
+          },
+          {
+            "check": "Check reservation utilisation every month and exchange or resize reservations that are underused.",
+            "why": "An unused reservation hour is lost money, because a reservation is billed whether or not it is used.",
+            "href": "https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/reservation-utilization"
+          }
+        ]
+      },
+      {
+        "title": "Rightsizing",
+        "items": [
+          {
+            "check": "Resize or shut down VMs with consistently low CPU and memory use.",
+            "why": "Many VMs are sized for a peak that never comes, and each size step down roughly halves compute cost.",
+            "href": "https://learn.microsoft.com/en-us/azure/advisor/advisor-cost-recommendations"
+          },
+          {
+            "check": "Use autoscale for App Service, VM scale sets and other services with variable load.",
+            "why": "Autoscale adds instances at peak and removes them when demand falls, so you do not pay for peak capacity all day.",
+            "href": "https://learn.microsoft.com/en-us/azure/azure-monitor/autoscale/autoscale-overview"
+          },
+          {
+            "check": "Run interruptible batch, test and CI work on Azure Spot VMs.",
+            "why": "Spot VMs use spare capacity at a deep discount, in exchange for possible eviction.",
+            "href": "https://learn.microsoft.com/en-us/azure/virtual-machines/spot-vms"
+          },
+          {
+            "check": "Check the disk type of each VM: move to Standard SSD where Premium SSD performance is not needed.",
+            "why": "Premium SSD costs more per disk every month, whether or not its extra performance is used.",
+            "href": "https://learn.microsoft.com/en-us/azure/virtual-machines/disks-types"
+          }
+        ]
+      },
+      {
+        "title": "Orphaned resources",
+        "items": [
+          {
+            "check": "Find and delete unattached managed disks.",
+            "why": "A managed disk is billed for its full provisioned size even after the VM using it has been deleted.",
+            "href": "https://learn.microsoft.com/en-us/azure/virtual-machines/disks-find-unattached-portal"
+          },
+          {
+            "check": "Release public IP addresses that are not associated with any resource.",
+            "why": "Public IP addresses are billed by the hour while they exist, whether or not anything uses them.",
+            "href": "https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/public-ip-addresses"
+          },
+          {
+            "check": "Review old disk snapshots, delete the ones you no longer need and use incremental snapshots.",
+            "why": "Full snapshots are billed for the whole disk size, while incremental snapshots store only the changes.",
+            "href": "https://learn.microsoft.com/en-us/azure/virtual-machines/disks-incremental-snapshots"
+          },
+          {
+            "check": "Deallocate VMs you stop, rather than only shutting them down from inside the operating system.",
+            "why": "A VM that is stopped but still allocated keeps being billed for compute.",
+            "href": "https://learn.microsoft.com/en-us/azure/virtual-machines/states-billing"
+          },
+          {
+            "check": "Delete empty or idle App Service plans.",
+            "why": "An App Service plan is billed for its instances even when no app runs in it.",
+            "href": "https://learn.microsoft.com/en-us/azure/app-service/overview-manage-costs"
+          }
+        ]
+      },
+      {
+        "title": "Dev and test",
+        "items": [
+          {
+            "check": "Set auto-shutdown schedules on dev and test VMs.",
+            "why": "Machines used only in working hours do not need to run, and bill, through nights and weekends.",
+            "href": "https://learn.microsoft.com/en-us/azure/virtual-machines/auto-shutdown-vm"
+          },
+          {
+            "check": "Run non-production subscriptions on Dev/Test pricing offers where your Visual Studio subscriptions allow it.",
+            "why": "Dev/Test offers give discounted rates, including no Windows licence charge on VMs, for non-production use.",
+            "href": "https://learn.microsoft.com/en-us/azure/devtest/offer/overview-what-is-devtest-offer-visual-studio"
+          }
+        ]
+      },
+      {
+        "title": "Storage tiers",
+        "items": [
+          {
+            "check": "Move rarely read blobs to the cool, cold or archive access tier.",
+            "why": "Cooler tiers cost much less per GB to store, with higher access costs and minimum storage periods.",
+            "href": "https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview"
+          },
+          {
+            "check": "Add lifecycle management rules that tier or delete blobs by age automatically.",
+            "why": "Rules keep the tiering going without anyone having to remember it.",
+            "href": "https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview"
+          },
+          {
+            "check": "Use locally redundant storage (LRS) where geo-redundancy is not required.",
+            "why": "Geo-redundant options store extra copies in a second region and cost more per GB.",
+            "href": "https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy"
+          }
+        ]
+      },
+      {
+        "title": "Egress",
+        "items": [
+          {
+            "check": "Keep chatty services and their data in the same region and cut unneeded cross-region and internet data transfer.",
+            "why": "Data leaving a region or Azure is billed per GB, while inbound transfer is free.",
+            "href": "https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/optimize-data-costs"
+          }
+        ]
+      },
+      {
+        "title": "Log Analytics",
+        "items": [
+          {
+            "check": "Set table-level retention to what you actually need and use long-term retention for data you keep only for compliance.",
+            "why": "Retention beyond the included period is billed per GB per month.",
+            "href": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-configure"
+          },
+          {
+            "check": "Use the Basic or Auxiliary table plan for high-volume logs you rarely query, and a commitment tier if you ingest steadily.",
+            "why": "Ingestion is usually the largest Log Analytics cost, and these options price it lower.",
+            "href": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/cost-logs"
+          },
+          {
+            "check": "Set a daily cap on workspaces where a runaway data source could cause a surprise bill.",
+            "why": "The cap stops billable ingestion for the rest of the day once the limit is reached.",
+            "href": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/daily-cap"
+          }
+        ]
+      },
+      {
+        "title": "Tagging and budgets",
+        "items": [
+          {
+            "check": "Require cost-centre, owner and environment tags with Azure Policy.",
+            "why": "Tags let you split the bill by team and find who owns an expensive resource.",
+            "href": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-policies"
+          },
+          {
+            "check": "Create budgets with email alerts at 50%, 80% and 100% for each subscription or resource group.",
+            "why": "Budgets warn you during the month, before an overrun reaches the invoice.",
+            "href": "https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets"
+          },
+          {
+            "check": "Turn on anomaly alerts and review unexpected charges as soon as they are flagged.",
+            "why": "Cost anomaly detection spots sudden spikes, such as a misconfigured scale rule, within days.",
+            "href": "https://learn.microsoft.com/en-us/azure/cost-management-billing/understand/analyze-unexpected-charges"
+          }
+        ]
+      }
+    ]
+  }
+]
