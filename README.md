@@ -1,6 +1,13 @@
 # Microsoft 365 security and Azure cost checklists
 
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+<!-- epifive:header -->
+> Secure a Microsoft 365 tenant and cut Azure costs with 54 checks, each linked to the Microsoft Learn page that shows how.
+
+[![Licence: CC BY 4.0](https://img.shields.io/badge/licence-CC%20BY%204.0-0a7560?style=flat-square)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/epifive/m365-azure-checklists?style=flat-square&label=release&color=4f5bd5)](https://github.com/epifive/m365-azure-checklists/releases/latest)
+[![GitHub stars](https://img.shields.io/github/stars/epifive/m365-azure-checklists?style=flat-square&color=b5791b)](https://github.com/epifive/m365-azure-checklists/stargazers)
+
+**[Web version & docs on epifive.com](https://www.epifive.com/guides?utm_source=github&utm_medium=readme&utm_campaign=m365-azure-checklists)** · **[Download the latest release](https://github.com/epifive/m365-azure-checklists/releases/latest)**
 
 Two practical checklists for IT admins, with 54 checks in total: a security baseline for a Microsoft 365 tenant and a cost review for an Azure subscription. Every check says why it matters and links to the Microsoft Learn page that shows how to do it, so you can work through them without hunting for documentation.
 
@@ -50,6 +57,8 @@ Edit the JSON, not the generated Markdown.
 
 The checklists are licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). You may copy, adapt and share them, including in client reports and internal runbooks, with attribution. Suggested attribution: "Checklists by EpiFive, https://www.epifive.com/guides, CC BY 4.0". Microsoft, Microsoft 365, Azure and Entra are trademarks of Microsoft Corporation; this project is not affiliated with or endorsed by Microsoft.
 
+Free tools from EpiFive: [Cloud cost optimizer](https://www.epifive.com/tools/cloud-cost-optimizer) · [Email domain checker](https://www.epifive.com/tools/email-domain-checker) (SPF, DKIM, DMARC) · Want a hand working through a checklist? See [EpiFive services](https://www.epifive.com/services).
+
 ---
 
-Free tools from EpiFive: [Cloud cost optimizer](https://www.epifive.com/tools/cloud-cost-optimizer) · [Email domain checker](https://www.epifive.com/tools/email-domain-checker) (SPF, DKIM, DMARC) · Want a hand working through a checklist? See [EpiFive services](https://www.epifive.com/services).
+<p align="center">Made by <b>EpiFive</b> — <a href="https://www.epifive.com/?utm_source=github&utm_medium=readme&utm_campaign=m365-azure-checklists">www.epifive.com</a> · <a href="https://www.epifive.com/open-source?utm_source=github&utm_medium=readme&utm_campaign=m365-azure-checklists">more open-source projects</a></p>

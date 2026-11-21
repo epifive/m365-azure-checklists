@@ -98,10 +98,7 @@ const total = guides.reduce((n, g) => n + itemCount(g), 0);
 
 const R = [];
 R.push('# Microsoft 365 security and Azure cost checklists', '');
-R.push(
-  `[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)`,
-  '',
-);
+R.push('<!-- epifive:header -->', "> Secure a Microsoft 365 tenant and cut Azure costs with 54 checks, each linked to the Microsoft Learn page that shows how.\n\n[![Licence: CC BY 4.0](https://img.shields.io/badge/licence-CC%20BY%204.0-0a7560?style=flat-square)](LICENSE)\n[![Latest release](https://img.shields.io/github/v/release/epifive/m365-azure-checklists?style=flat-square&label=release&color=4f5bd5)](https://github.com/epifive/m365-azure-checklists/releases/latest)\n[![GitHub stars](https://img.shields.io/github/stars/epifive/m365-azure-checklists?style=flat-square&color=b5791b)](https://github.com/epifive/m365-azure-checklists/stargazers)\n\n**[Web version & docs on epifive.com](https://www.epifive.com/guides?utm_source=github&utm_medium=readme&utm_campaign=m365-azure-checklists)** · **[Download the latest release](https://github.com/epifive/m365-azure-checklists/releases/latest)**\n");
 R.push(
   `Two practical checklists for IT admins, with ${total} checks in total: a security baseline for a Microsoft 365 tenant and a cost review for an Azure subscription. Every check says why it matters and links to the Microsoft Learn page that shows how to do it, so you can work through them without hunting for documentation.`,
   '',
@@ -143,11 +140,11 @@ R.push(
   `The checklists are licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). You may copy, adapt and share them, including in client reports and internal runbooks, with attribution. Suggested attribution: "Checklists by EpiFive, ${SITE}/guides, CC BY 4.0". Microsoft, Microsoft 365, Azure and Entra are trademarks of Microsoft Corporation; this project is not affiliated with or endorsed by Microsoft.`,
   '',
 );
-R.push('---', '');
 R.push(
   `Free tools from EpiFive: [Cloud cost optimizer](${SITE}/tools/cloud-cost-optimizer) · [Email domain checker](${SITE}/tools/email-domain-checker) (SPF, DKIM, DMARC) · Want a hand working through a checklist? See [EpiFive services](${SITE}/services).`,
   '',
 );
+R.push("---\n\n<p align=\"center\">Made by <b>EpiFive</b> — <a href=\"https://www.epifive.com/?utm_source=github&utm_medium=readme&utm_campaign=m365-azure-checklists\">www.epifive.com</a> · <a href=\"https://www.epifive.com/open-source?utm_source=github&utm_medium=readme&utm_campaign=m365-azure-checklists\">more open-source projects</a></p>\n");
 fs.writeFileSync(path.join(HERE, 'README.md'), R.join('\n'));
 
 fs.mkdirSync(path.join(HERE, '.github', 'ISSUE_TEMPLATE'), { recursive: true });
